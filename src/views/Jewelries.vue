@@ -1,12 +1,27 @@
+<script>
+import { RouterLink, RouterView } from 'vue-router';
+
+import Header from '../components/Header.vue'
+
+
+export default {
+    components: {
+        Header,
+    }
+}
+</script>
+
+
 <template>
     <div>
-        <h1>this is the jewelries page</h1>
 
+        <Header />
+        <h1>this is the Jewelries page</h1>
     </div>
+
+    <RouterView />
 </template>
 
-<script>
 
-</script>
 
 <style></style>

@@ -1,24 +1,27 @@
 <script>
 import { RouterLink, RouterView } from 'vue-router'
+import Header from './components/Header.vue'
+
+
+export default {
+  components: {
+    Header,
+  }
+}
 
 </script>
 
 <template>
   <div>
-    <nav>
-      <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/about">About</RouterLink>
-      <RouterLink to="/contact">Contact</RouterLink>
-      <RouterLink to="/jewelries">Jewelries</RouterLink>
-      <RouterLink to="/men">Men</RouterLink>
-      <RouterLink to="/women">Women</RouterLink>
-      <RouterLink to="/electronics">Electronics</RouterLink>
 
-    </nav>
+
+    <!-- <Header /> -->
   </div>
 
 
   <RouterView />
 </template>
 
-<style></style>
+<style>
+/* @import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900&display=swap'); */
+</style>
