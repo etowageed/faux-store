@@ -2,11 +2,34 @@
 import { RouterLink, RouterView } from 'vue-router';
 
 import Header from '../components/Header.vue'
+import Products from '@/components/Products.vue';
 
-
+import axios from 'axios';
 export default {
     components: {
-        Header,
+        Header, Products,
+    },
+    data() {
+        return {
+            allProducts: '',
+        }
+    },
+    methods: {
+        getJeweleryProducts() {
+            axios.get('https://fakestoreapi.com/products/category/jewelery')
+                .then((response) => {
+                    console.log(response.data)
+
+                    this.allProducts = response.data
+                })
+                .catch((error) => {
+                    console.log("somethings not right")
+                })
+        }
+    },
+
+    mounted() {
+        this.getJeweleryProducts()
     }
 }
 </script>
@@ -14,9 +37,8 @@ export default {
 
 <template>
     <div>
-
         <Header />
-        <h1>this is the Jewelries page</h1>
+        <Products :allProducts="allProducts" />
     </div>
 
     <RouterView />

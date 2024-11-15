@@ -2,11 +2,37 @@
 import { RouterLink, RouterView } from 'vue-router';
 
 import Header from '../components/Header.vue'
+import Products from '@/components/Products.vue';
+import axios from 'axios';
 
 
 export default {
     components: {
-        Header,
+        Header, Products,
+    },
+    data() {
+        return {
+            allProducts: '',
+        }
+    },
+
+    methods: {
+        getMenProducts() {
+            axios.get(`https://fakestoreapi.com/products/category/${"men's clothing"}`)
+                .then((response) => {
+                    console.log(response.data)
+
+                    this.allProducts = response.data
+                })
+
+                .catch((error) => {
+                    console.log('somehting not right')
+                })
+        }
+    },
+
+    mounted() {
+        this.getMenProducts()
     }
 }
 </script>
@@ -14,9 +40,8 @@ export default {
 
 <template>
     <div>
-
         <Header />
-        <h1>this is the men page</h1>
+        <Products :allProducts="allProducts" />
     </div>
 
     <RouterView />

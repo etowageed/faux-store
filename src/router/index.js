@@ -6,6 +6,7 @@ import Women from "../views/Women.vue";
 import Jewelries from "../views/Jewelries.vue";
 import Contact from "../views/Contact.vue";
 import Electronics from "../views/Electronics.vue";
+import details from "@/views/details.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -51,6 +52,12 @@ const router = createRouter({
       path: "/electronics",
       name: "electronics",
       component: Electronics,
+    },
+
+    {
+      path: "/details/:id",
+      name: "detailsPage",
+      component: details,
     },
   ],
 });
