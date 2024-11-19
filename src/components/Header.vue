@@ -22,7 +22,8 @@
                     @click="toggleCart">
                 <img src="../assets/imgs/image-avatar.png" alt="" class="w-10 h-10 inline">
             </span>
-            <Cart class="fixed right-[10%] top-[7%]" :class="{ toggleOff: !isShowing, }" />
+            <Cart class="fixed top-[10%] right-[23.5%] md:right-[10%] md:top-[8%]"
+                :class="{ toggleOff: !isShowing, }" />
 
 
 
@@ -34,6 +35,7 @@
 import Cart from '@/components/Cart.vue';
 
 export default {
+    name: 'Header',
     components: {
         Cart,
     },

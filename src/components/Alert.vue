@@ -5,7 +5,9 @@
 </template>
 
 <script>
-
+export default {
+    name: 'Alert',
+}
 </script>
 
 <style></style>

@@ -3,8 +3,20 @@ import BtnCheckout from './BtnCheckout.vue';
 
 
 export default {
+    name: 'Cart',
     components: {
         BtnCheckout,
+    },
+    data() {
+        return {
+            cartItems: ''
+        }
+    },
+
+    mounted() {
+        this.emitter.on('cartEvent', (data) => {
+            this.cartItems = data
+        });
     }
 }
 </script>
@@ -17,15 +29,16 @@ export default {
 
         </div>
         <div class="cart-items px-5">
-            <h1>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate eveniet magni doloremque mollitia
-                cumque rem dolore placeat quibusdam, natus expedita accusantium praesentium necessitatibus. Libero aut
-                dignissimos, pariatur debitis ratione dolorem.
+            <li v-for="cartItem in cartItems">
+                <div>
+                    <img :src="cartItem.image" alt="" class="w-10 h-10">
+                    <p>{{ cartItem.title }}</p>
+                    <span>{{ cartItem.price }}</span>
 
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui veniam corporis modi fugiat repudiandae a
-                assumenda dignissimos quaerat in voluptate id, saepe neque unde suscipit possimus est expedita, facere
-                placeat.
-            </h1>
+                    <button><img src="../assets/imgs/icon-delete.svg" alt=""></button>
+                </div>
+
+            </li>
         </div>
         <div class="checkout-cta px-5">
             <BtnCheckout />

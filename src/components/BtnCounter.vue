@@ -1,6 +1,8 @@
 <script>
 
 export default {
+
+    name: 'BtnCounter',
     data() {
         return {
             count: 0

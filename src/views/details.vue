@@ -13,11 +13,17 @@ export default {
     data() {
         return {
             productDetails: '',
+            detailsAddToCart: ''
+
         }
     },
     created() {
         const productId = this.$route.params.id;
-        this.loadSingleProduct(productId)
+        this.loadSingleProduct(productId);
+        this.emitter.on('addCartEvent', (data) => {
+            this.addToCart = data;
+        })
+
     },
 
     methods: {
@@ -31,10 +37,20 @@ export default {
                     console.log(`something's not right`)
                 })
         },
+
+        emitDetailsAddToCart() {
+            this.emitter.emit('detailsAddToCart', this.detailsAddToCart)
+        },
+
         goBack() {
             this.$router.go(-1)
-        }
+        },
+
     },
+
+    mounted() {
+        this.emitDetailsAddToCart()
+    }
 
 }
 </script>
@@ -53,7 +69,7 @@ export default {
             <p>{{ productDetails.description }}</p>
             <p>{{ productDetails.price }}</p>
             <BtnCounter class="mr-3" />
-            <BtnCart />
+            <BtnCart @click="addToCart()" />
         </div>
     </div>
 

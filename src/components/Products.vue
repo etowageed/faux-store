@@ -4,21 +4,58 @@ import BtnCheckout from '@/components/BtnCheckout.vue';
 import BtnClear from '@/components/BtnClear.vue';
 
 export default {
-
+    name: 'Products',
     components: {
         BtnCart, BtnCheckout, BtnClear,
     },
+    data() {
+        return {
+            cartItems: [],
+            // detailsAddToCart: ''
+        }
+    },
+
+    // takes in a data prop from all the product views
     props: {
         allProducts: {
             type: Array,
             required: true
-        }
+        },
     },
+
+
 
     methods: {
         viewDetails(productId) {
             this.$router.push({ name: 'detailsPage', params: { id: productId } })
+        },
+        addToCart(product) {
+
+            const cartItem = {
+                id: product.id,
+                image: product.image,
+                title: product.title,
+                price: product.price
+            }
+            this.cartItems.push(cartItem)
+            console.log(this.cartItems)
+        },
+
+        emitCartItems() {
+            this.emitter.emit('cartEvent', this.cartItems)
+        },
+        emitAddToCart() {
+            this.emitter.emit('addCartEvent', this.addToCart)
         }
+
+    },
+    mounted() {
+        this.emitCartItems(),
+            this.emitAddToCart()
+
+        // this.emitter.on('detailsAddToCart', (data) => {
+        //     this.detailsAddToCart = data
+        // })
     }
 }
 
@@ -36,24 +73,24 @@ export default {
             </div>
 
             <div>
-                <!-- <p>{{ product.id }}</p> -->
                 <p class="text-primaryCol font-medium">{{ product.category }}</p>
                 <p class="text-darkBlue font-bold text-lg">{{ product.title }}</p>
                 <p class="text-darkBlue font-bold ">{{ product.price }}</p>
-                <!-- <p>{{ product.description }}</p> -->
             </div>
 
             <div class="flex space-x-4">
 
-                <BtnCart />
+                <BtnCart @click="addToCart(product)" />
 
                 <BtnClear @click="viewDetails(product.id)" />
 
             </div>
 
         </div>
+
     </div>
-    <RouterView />
+
+
 </template>
 
 <style></style>

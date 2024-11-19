@@ -1,9 +1,11 @@
 <script>
 import { RouterLink, RouterView } from 'vue-router'
 import Header from './components/Header.vue'
+import Products from './components/Products.vue';
 
 
 export default {
+  name: 'App',
   components: {
     Header,
   }
@@ -13,15 +15,13 @@ export default {
 
 <template>
   <div>
-
-
-    <!-- <Header /> -->
   </div>
+
+
+
 
 
   <RouterView />
 </template>
 
-<style>
-/* @import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900&display=swap'); */
-</style>
+<style></style>

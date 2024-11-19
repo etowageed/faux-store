@@ -1,5 +1,4 @@
 <script>
-import { RouterLink, RouterView } from 'vue-router';
 import Header from '../components/Header.vue'
 import Products from '../components/Products.vue';
 
@@ -7,6 +6,8 @@ import axios from 'axios';
 
 
 export default {
+
+    name: 'Home',
     components: {
         Header, Products,
     },
@@ -38,12 +39,6 @@ export default {
     mounted() {
         this.getProducts()
     },
-
-    updated() {
-
-    },
-
-
 }
 
 </script>
@@ -52,10 +47,11 @@ export default {
 <template>
     <div>
         <Header />
-        <Products :allProducts="allProducts" />
-    </div>
+        <keep-alive>
+            <Products :allProducts="allProducts" />
 
-    <RouterView />
+        </keep-alive>
+    </div>
 </template>
 
 

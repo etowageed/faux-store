@@ -1,5 +1,4 @@
 <script>
-import { RouterLink, RouterView } from 'vue-router';
 
 import Header from '../components/Header.vue'
 import Products from '@/components/Products.vue';
@@ -7,12 +6,13 @@ import axios from 'axios';
 
 
 export default {
+    name: 'Men',
     components: {
         Header, Products,
     },
     data() {
         return {
-            allProducts: '',
+            allProducts: [],
         }
     },
 
@@ -41,10 +41,12 @@ export default {
 <template>
     <div>
         <Header />
-        <Products :allProducts="allProducts" />
+        <keep-alive>
+            <Products :allProducts="allProducts" />
+
+        </keep-alive>
     </div>
 
-    <RouterView />
 </template>
 
 
