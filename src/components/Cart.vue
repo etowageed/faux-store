@@ -10,13 +10,24 @@ export default {
     data() {
         return {
             cartItems: '',
-            totalPrice: ''
+            totalPrice: '',
         }
     },
     methods: {
         getTotalPrice() {
             this.totalPrice = this.cartItems.reduce((sum, cartItem) => sum + cartItem.price, 0)
             console.log(this.totalPrice)
+        },
+
+        deleteCartItem(itemId) {
+            // didn't use the immutable approach as it doesn't allow to add items back after deleting
+            // this.cartItems = this.cartItems.filter(cartItem => cartItem.id !== itemId);
+
+            // used the mutable approach as it allows to delete and add items back
+            const index = this.cartItems.findIndex(cartItem => cartItem.id === itemId)
+            if (index !== -1) {
+                this.cartItems.splice(index, 1);
+            }
         }
     },
 
@@ -48,13 +59,14 @@ export default {
                     <p>{{ cartItem.title }}</p>
                     <span>{{ cartItem.price }}</span>
 
-                    <button><img src="../assets/imgs/icon-delete.svg" alt=""></button>
                 </div>
+                <button @click="deleteCartItem(cartItem.id)"><img src="../assets/imgs/icon-delete.svg" alt=""></button>
 
             </li>
         </div>
-        <div class="checkout-cta px-5">
-            <p>Total {{ totalPrice }}</p>
+        <p v-show="totalPrice <= 0" class="text-center font-semibold text-darkGrayishBlue">Your cart is empty</p>
+        <div class="checkout-cta px-5" v-if="totalPrice > 0">
+            <p>Total ${{ totalPrice }}</p>
             <BtnCheckout />
         </div>
     </div>
