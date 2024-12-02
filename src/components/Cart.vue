@@ -9,7 +9,14 @@ export default {
     },
     data() {
         return {
-            cartItems: ''
+            cartItems: '',
+            totalPrice: ''
+        }
+    },
+    methods: {
+        getTotalPrice() {
+            this.totalPrice = this.cartItems.reduce((sum, cartItem) => sum + cartItem.price, 0)
+            console.log(this.totalPrice)
         }
     },
 
@@ -17,7 +24,13 @@ export default {
         this.emitter.on('cartEvent', (data) => {
             this.cartItems = data
         });
+
+    },
+    updated() {
+
+        this.getTotalPrice()
     }
+
 }
 </script>
 
@@ -29,7 +42,7 @@ export default {
 
         </div>
         <div class="cart-items px-5">
-            <li v-for="cartItem in cartItems">
+            <li v-for="cartItem in cartItems" :key="cartItem">
                 <div>
                     <img :src="cartItem.image" alt="" class="w-10 h-10">
                     <p>{{ cartItem.title }}</p>
@@ -41,6 +54,7 @@ export default {
             </li>
         </div>
         <div class="checkout-cta px-5">
+            <p>Total {{ totalPrice }}</p>
             <BtnCheckout />
         </div>
     </div>
