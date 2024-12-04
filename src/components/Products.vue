@@ -30,7 +30,6 @@ export default {
             this.$router.push({ name: 'detailsPage', params: { id: productId } })
         },
         addToCart(product) {
-
             const cartItem = {
                 id: product.id,
                 image: product.image,

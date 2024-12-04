@@ -9,8 +9,8 @@ export default {
     },
     data() {
         return {
-            cartItems: '',
-            totalPrice: '',
+            cartItems: [],
+            totalPrice: 0,
         }
     },
     methods: {
@@ -28,29 +28,47 @@ export default {
             if (index !== -1) {
                 this.cartItems.splice(index, 1);
             }
+        },
+        closeCart() {
+            // to figure out how to implement this
+        },
+
+        saveCartToStorage() {
+            localStorage.setItem('cartItemKey', JSON.stringify(this.cartItems));
+        },
+        loadCartFromStorage() {
+            const savedCart = localStorage.getItem('cartItemKey');
+            if (savedCart) {
+                this.cartItems = JSON.parse(savedCart);
+
+            } else {
+                console.log('stored items not found')
+            }
         }
     },
 
     mounted() {
+        this.saveCartToStorage()
+        this.loadCartFromStorage();
         this.emitter.on('cartEvent', (data) => {
-            this.cartItems = data
+            this.cartItems = data;
         });
-
     },
     updated() {
-
+        this.saveCartToStorage();
         this.getTotalPrice()
+
     }
 
 }
 </script>
 
 <template>
-    <div
+    <div id="cart"
         class="border border-red-300 w-[75%] md:w-96 min-h-52 shadow-lg flex flex-col justify-between py-5 rounded-md bg-white">
         <div class="cart-head border-b px-5 pb-7">
             <h3 class="font-semibold text-darkBlue">Cart</h3>
-
+            <img src="../assets/imgs/icon-close.svg" alt="" srcset="" @click="closeCart()" class="cursor-pointer">
         </div>
         <div class="cart-items px-5">
             <li v-for="cartItem in cartItems" :key="cartItem">
@@ -60,7 +78,8 @@ export default {
                     <span>{{ cartItem.price }}</span>
 
                 </div>
-                <button @click="deleteCartItem(cartItem.id)"><img src="../assets/imgs/icon-delete.svg" alt=""></button>
+                <button @click="deleteCartItem(cartItem.id)" class="cursor-pointer"><img
+                        src="../assets/imgs/icon-delete.svg" alt=""></button>
 
             </li>
         </div>
