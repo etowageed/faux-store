@@ -3,6 +3,7 @@ import BtnCart from '@/components/BtnCart.vue';
 import BtnCheckout from '@/components/BtnCheckout.vue';
 import BtnClear from '@/components/BtnClear.vue';
 
+
 export default {
     name: 'Products',
     components: {
@@ -36,25 +37,32 @@ export default {
                 title: product.title,
                 price: product.price
             }
-            this.cartItems.push(cartItem)
+            this.cartItems.push(cartItem);
+            this.saveCartToStorage();
             console.log(this.cartItems)
         },
 
         emitCartItems() {
             this.emitter.emit('cartEvent', this.cartItems)
         },
-        emitAddToCart() {
-            this.emitter.emit('addCartEvent', this.addToCart)
+
+        saveCartToStorage() {
+            localStorage.setItem('cart_Items_key', JSON.stringify(this.cartItems));
+        },
+        loadCartFromStorage() {
+            const savedCart = localStorage.getItem('cart_Items_key');
+            if (savedCart) {
+                this.cartItems = JSON.parse(savedCart);
+            }
         }
 
     },
-    mounted() {
-        this.emitCartItems(),
-            this.emitAddToCart()
 
-        // this.emitter.on('detailsAddToCart', (data) => {
-        //     this.detailsAddToCart = data
-        // })
+    mounted() {
+
+        this.loadCartFromStorage();
+        this.emitCartItems();
+
     }
 }
 

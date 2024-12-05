@@ -7,13 +7,27 @@ export default {
     components: {
         BtnCheckout,
     },
+
     data() {
         return {
             cartItems: [],
             totalPrice: 0,
         }
     },
+
     methods: {
+
+        loadCartFromStorage() {
+            const savedCart = localStorage.getItem('cart_Items_key');
+            if (savedCart) {
+                this.cartItems = JSON.parse(savedCart);
+            }
+        },
+
+        saveCartToStorage() {
+            localStorage.setItem('cart_Items_key', JSON.stringify(this.cartItems));
+        },
+
         getTotalPrice() {
             this.totalPrice = this.cartItems.reduce((sum, cartItem) => sum + cartItem.price, 0)
             console.log(this.totalPrice)
@@ -27,39 +41,25 @@ export default {
             const index = this.cartItems.findIndex(cartItem => cartItem.id === itemId)
             if (index !== -1) {
                 this.cartItems.splice(index, 1);
+                this.saveCartToStorage();
             }
         },
         closeCart() {
             // to figure out how to implement this
         },
-
-        saveCartToStorage() {
-            localStorage.setItem('cartItemKey', JSON.stringify(this.cartItems));
-        },
-        loadCartFromStorage() {
-            const savedCart = localStorage.getItem('cartItemKey');
-            if (savedCart) {
-                this.cartItems = JSON.parse(savedCart);
-
-            } else {
-                console.log('stored items not found')
-            }
-        }
     },
 
     mounted() {
-        this.saveCartToStorage()
         this.loadCartFromStorage();
         this.emitter.on('cartEvent', (data) => {
             this.cartItems = data;
         });
     },
+
     updated() {
-        this.saveCartToStorage();
-        this.getTotalPrice()
+        this.getTotalPrice();
 
     }
-
 }
 </script>
 

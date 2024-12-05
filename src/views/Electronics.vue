@@ -20,10 +20,6 @@ export default {
         }
     },
 
-    // computed: {
-    //     ...mapState(['sharedComponentState']),
-    // },
-
     methods: {
         getElectronicsProducts() {
             axios.get('https://fakestoreapi.com/products/category/electronics')
@@ -37,19 +33,14 @@ export default {
                     console.log("somethings not right")
                 })
         },
-        // ...mapActions(['updateComponentState']),
-        // saveState() {
-        //     this.updateComponentState(this.localState);
-        // },
+
     },
 
     mounted() {
         this.getElectronicsProducts()
     },
 
-    // created() {
-    //     this.localState = this.sharedComponentState;
-    // },
+
 }
 </script>
 

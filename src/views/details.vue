@@ -38,19 +38,12 @@ export default {
                 })
         },
 
-        emitDetailsAddToCart() {
-            this.emitter.emit('detailsAddToCart', this.detailsAddToCart)
-        },
 
         goBack() {
             this.$router.go(-1)
         },
 
     },
-
-    mounted() {
-        this.emitDetailsAddToCart()
-    }
 
 }
 </script>
