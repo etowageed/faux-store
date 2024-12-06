@@ -5,17 +5,20 @@ export default {
     name: 'BtnCounter',
     data() {
         return {
-            count: 0
+            count: 1
         }
     },
 
     methods: {
         counterUp() {
-            this.count++
+            this.count++;
+            this.$emit('updateCount', this.count);
         },
         counterDown() {
             if (this.count >= 1) {
-                this.count--
+                this.count--;
+                this.$emit('updateCount', this.count);
+
             }
 
         }
