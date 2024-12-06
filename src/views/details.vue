@@ -36,32 +36,17 @@ export default {
                     console.log(`something's not right`, error)
                 })
         },
-        updateQuantity(count) {
-            this.quantity = count;
-        },
+
         addToCart(productDetails) {
             const cartItem = {
                 id: productDetails.id,
                 image: productDetails.image,
                 title: productDetails.title,
                 price: productDetails.price,
-                quantity: this.quantity,
             };
 
-            // checking if product already exists in cart
-            const existingItemIndex = this.cartItems.findIndex(item => item.id === cartItem.id);
 
-            if (existingItemIndex !== -1) {
-                // if item exists, update it's quantity
-                this.cartItems[existingItemIndex].quantity += this.quantity;
-            } else {
-                this.cartItems.push(cartItem);
-
-            }
             this.saveCartToStorage();
-
-            // reset the quantity to 1 after adding to cart
-            this.quantity = 1;
 
             console.log(this.cartItems)
         },
