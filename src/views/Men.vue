@@ -12,7 +12,7 @@ export default {
     },
     data() {
         return {
-            allProducts: [],
+            products: [],
         }
     },
 
@@ -22,7 +22,7 @@ export default {
                 .then((response) => {
                     console.log(response.data)
 
-                    this.allProducts = response.data
+                    this.products = response.data
                 })
 
                 .catch((error) => {
@@ -42,7 +42,7 @@ export default {
     <div>
         <Header />
         <keep-alive>
-            <Products :allProducts="allProducts" />
+            <Products :products="products" />
 
         </keep-alive>
     </div>

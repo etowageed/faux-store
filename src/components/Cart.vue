@@ -29,7 +29,7 @@ export default {
         },
 
         getTotalPrice() {
-            this.totalPrice = this.cartItems.reduce((sum, cartItem) => sum + cartItem.price, 0)
+            this.totalPrice = this.cartItems.reduce((sum, cartItem) => sum + (cartItem.price * cartItem.count), 0)
             console.log(this.totalPrice)
         },
 
@@ -42,6 +42,7 @@ export default {
             if (index !== -1) {
                 this.cartItems.splice(index, 1);
                 this.saveCartToStorage();
+                this.getTotalPrice();
             }
         },
         closeCart() {
@@ -74,8 +75,8 @@ export default {
             <li v-for="cartItem in cartItems" :key="cartItem">
                 <div>
                     <img :src="cartItem.image" alt="" class="w-10 h-10">
-                    <p>{{ cartItem.title }}</p>
-                    <span>{{ cartItem.price }}</span>
+                    <p>{{ cartItem.title }} (x{{ cartItem.count }})</p>
+                    <span>${{ (cartItem.price * cartItem.count).toFixed(2) }}</span>
 
                 </div>
                 <button @click="deleteCartItem(cartItem.id)" class="cursor-pointer"><img
@@ -85,7 +86,7 @@ export default {
         </div>
         <p v-show="totalPrice <= 0" class="text-center font-semibold text-darkGrayishBlue">Your cart is empty</p>
         <div class="checkout-cta px-5" v-if="totalPrice > 0">
-            <p>Total ${{ totalPrice }}</p>
+            <p>Total ${{ totalPrice.toFixed(2) }}</p>
             <BtnCheckout />
         </div>
     </div>

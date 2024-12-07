@@ -12,40 +12,41 @@ export default {
     },
     data() {
         return {
-            productDetails: '',
-            detailsAddToCart: '',
+            product: {},
             cartItems: [],
-            quantity: 1,
+            count: 1,
 
         }
     },
-    created() {
-        const productId = this.$route.params.id;
-        this.loadSingleProduct(productId);
 
-    },
 
     methods: {
         loadSingleProduct(id) {
             axios.get(`https://fakestoreapi.com/products/${id}`)
                 .then((res) => {
                     console.log(res.data)
-                    this.productDetails = res.data
+                    this.product = res.data
                 })
                 .catch((error) => {
                     console.log(`something's not right`, error)
                 })
         },
 
-        addToCart(productDetails) {
-            const cartItem = {
-                id: productDetails.id,
-                image: productDetails.image,
-                title: productDetails.title,
-                price: productDetails.price,
-            };
+        addToCart(product) {
+            const existingItem = this.cartItems.find(item => item.id === product.id);
 
+            if (existingItem) {
+                existingItem.count += this.count;
+            } else {
+                this.cartItems.push({
+                    id: product.id,
+                    image: product.image,
+                    title: product.title,
+                    price: product.price,
+                    count: this.count,
+                });
 
+            }
             this.saveCartToStorage();
 
             console.log(this.cartItems)
@@ -72,6 +73,12 @@ export default {
 
     },
 
+    created() {
+        const productId = this.$route.params.id;
+        this.loadSingleProduct(productId);
+
+    },
+
     mounted() {
         this.loadCartFromStorage(),
             this.emitCartItems()
@@ -85,16 +92,16 @@ export default {
     <Header />
     <div class="lg:w-1/3 mx-auto md:flex border border-red-500">
         <div class="md:w-1/3 lg:w-1/2">
-            <img :src="productDetails.image" alt="" srcset="" class="w-full ">
+            <img :src="product.image" alt="" srcset="" class="w-full ">
         </div>
 
         <div class="lg:w-1/2 flex flex-col justify-between">
-            <p>{{ productDetails.category }}</p>
-            <p>{{ productDetails.title }}</p>
-            <p>{{ productDetails.description }}</p>
-            <p>{{ productDetails.price }}</p>
-            <BtnCounter @updateCount="updateQuantity" class="mr-3" />
-            <BtnCart @click="addToCart(productDetails)" />
+            <p>{{ product.category }}</p>
+            <p>{{ product.title }}</p>
+            <p>{{ product.description }}</p>
+            <p>${{ product.price }}</p>
+            <BtnCounter @countEvent="count = $event" class="mr-3" />
+            <BtnCart @click="addToCart(product)" />
 
 
         </div>

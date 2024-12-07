@@ -13,12 +13,13 @@ export default {
         return {
             cartItems: [],
             // detailsAddToCart: ''
+            count: 1,
         }
     },
 
     // takes in a data prop from all the product views
     props: {
-        allProducts: {
+        products: {
             type: Array,
             required: true
         },
@@ -31,14 +32,22 @@ export default {
             this.$router.push({ name: 'detailsPage', params: { id: productId } })
         },
         addToCart(product) {
-            const cartItem = {
-                id: product.id,
-                image: product.image,
-                title: product.title,
-                price: product.price
+            const existingItem = this.cartItems.find(item => item.id === product.id);
+
+            if (existingItem) {
+                existingItem.count += this.count;
+            } else {
+                this.cartItems.push({
+                    id: product.id,
+                    image: product.image,
+                    title: product.title,
+                    price: product.price,
+                    count: this.count,
+                });
+
             }
-            this.cartItems.push(cartItem);
             this.saveCartToStorage();
+
             console.log(this.cartItems)
         },
 
@@ -70,7 +79,7 @@ export default {
 
 <template>
     <div class="border border-red-600 lg:w-1/3 md:flex md:flex-wrap mx-auto">
-        <div v-for="(product, index ) in allProducts" :key="product.id"
+        <div v-for="(product, index ) in products" :key="index"
             class="border border-primaryCol grow md:w-1/3 m-6 p-3 flex justify-between flex-col">
 
             <div class="border border-red-600">

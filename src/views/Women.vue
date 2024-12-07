@@ -12,7 +12,7 @@ export default {
 
     data() {
         return {
-            allProducts: [],
+            products: [],
         }
     },
     methods: {
@@ -20,7 +20,7 @@ export default {
             axios.get(`https://fakestoreapi.com/products/category/${"women's clothing"}`)
                 .then((response) => {
                     console.log(response.data)
-                    this.allProducts = response.data
+                    this.products = response.data
                 })
                 .catch((error) => {
                     console.log("somethings not right")
@@ -39,7 +39,7 @@ export default {
     <div>
         <Header />
         <keep-alive>
-            <Products :allProducts="allProducts" />
+            <Products :products="products" />
 
         </keep-alive>
     </div>

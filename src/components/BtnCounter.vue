@@ -12,12 +12,12 @@ export default {
     methods: {
         counterUp() {
             this.count++;
-            this.$emit('updateCount', this.count);
+            this.$emit('countEvent', this.count);
         },
         counterDown() {
-            if (this.count >= 1) {
+            if (this.count > 1) {
                 this.count--;
-                this.$emit('updateCount', this.count);
+                this.$emit('countEvent', this.count);
 
             }
 

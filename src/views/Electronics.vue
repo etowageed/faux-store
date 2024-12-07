@@ -16,7 +16,7 @@ export default {
     },
     data() {
         return {
-            allProducts: [],
+            products: [],
         }
     },
 
@@ -25,7 +25,7 @@ export default {
             axios.get('https://fakestoreapi.com/products/category/electronics')
                 .then((response) => {
                     console.log(response.data)
-                    this.allProducts = response.data;
+                    this.products = response.data;
 
 
                 })
@@ -52,7 +52,7 @@ export default {
 
         <!-- declares the data prop of the consumed API to send to products component for display -->
         <keep-alive>
-            <Products :allProducts="allProducts" />
+            <Products :products="products" />
 
         </keep-alive>
     </div>
