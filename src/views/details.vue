@@ -1,6 +1,6 @@
 <script>
 import axios from 'axios';
-import BtnCart from '@/components/BtnCart.vue';
+import BtnSolid from '@/components/BtnSolid.vue';
 import Header from '@/components/Header.vue'
 import BtnCounter from '@/components/BtnCounter.vue';
 
@@ -8,7 +8,7 @@ import BtnCounter from '@/components/BtnCounter.vue';
 export default {
 
     components: {
-        BtnCart, Header, BtnCounter,
+        BtnSolid, Header, BtnCounter,
     },
     data() {
         return {
@@ -101,7 +101,7 @@ export default {
             <p>{{ product.description }}</p>
             <p>${{ product.price }}</p>
             <BtnCounter @countEvent="count = $event" class="mr-3" />
-            <BtnCart @click="addToCart(product)" />
+            <BtnSolid @click="addToCart(product)" btnText="Add to cart" icon="/icon-cart.svg"></BtnSolid>
 
 
         </div>

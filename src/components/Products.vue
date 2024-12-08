@@ -1,13 +1,12 @@
 <script>
-import BtnCart from '@/components/BtnCart.vue';
-import BtnCheckout from '@/components/BtnCheckout.vue';
+import BtnSolid from '@/components/BtnSolid.vue';
 import BtnClear from '@/components/BtnClear.vue';
 
 
 export default {
     name: 'Products',
     components: {
-        BtnCart, BtnCheckout, BtnClear,
+        BtnSolid, BtnSolid, BtnClear,
     },
     data() {
         return {
@@ -96,9 +95,9 @@ export default {
 
             <div class="flex space-x-4">
 
-                <BtnCart @click="addToCart(product)" />
+                <BtnSolid @click="addToCart(product)" btnText="Add to cart" icon="/icon-cart.svg"></BtnSolid>
 
-                <BtnClear @click="viewDetails(product.id)" />
+                <BtnClear btnText="Details" @click="viewDetails(product.id)"></BtnClear>
 
             </div>
 

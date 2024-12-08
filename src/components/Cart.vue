@@ -1,11 +1,11 @@
 <script>
-import BtnCheckout from './BtnCheckout.vue';
+import BtnSolid from './BtnSolid.vue';
 
 
 export default {
     name: 'Cart',
     components: {
-        BtnCheckout,
+        BtnSolid,
     },
 
     data() {
@@ -48,6 +48,13 @@ export default {
         closeCart() {
             // to figure out how to implement this
         },
+
+        checkOut() {
+            this.$router.push({
+                name: 'Checkout',
+                params: { cartItems: JSON.parse(JSON.stringify(this.cartItems)) },
+            });
+        },
     },
 
     mounted() {
@@ -87,7 +94,7 @@ export default {
         <p v-show="totalPrice <= 0" class="text-center font-semibold text-darkGrayishBlue">Your cart is empty</p>
         <div class="checkout-cta px-5" v-if="totalPrice > 0">
             <p>Total ${{ totalPrice.toFixed(2) }}</p>
-            <BtnCheckout />
+            <BtnSolid @click="checkOut()" btnText="Checkout"></BtnSolid>
         </div>
     </div>
 </template>
