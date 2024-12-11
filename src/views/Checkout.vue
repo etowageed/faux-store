@@ -1,7 +1,8 @@
 <script>
 import BtnClear from '@/components/BtnClear.vue';
 import BtnSolid from '@/components/BtnSolid.vue';
-import { onDeactivated } from 'vue';
+import { loadStripe } from '@stripe/stripe-js';
+
 export default {
     name: "Checkout",
     components: {
@@ -12,9 +13,32 @@ export default {
         return {
             cartItems: [],
             totalPrice: 0,
-            // count: '',
+            stripe: null,
+            cardElement: null,
+            error: null,
+            success: null,
+            clientSecret: null,
+            isProcessing: false,
         }
     },
+
+    async mounted() {
+        this.stripe = await loadStripe("pk_test_51QUcd1AsoR3EF3WoXU8bGLklW5FcKHvUjmxNygDUghGbqiOk6z4aTFLEmXlkW84VhhPCw58FH1sNC9OY1WxdCik800CB7IOvpH")
+        const elements = this.stripe.elements();
+        this.cardElement = elements.create("card")
+        this.cardElement.mount("#card-element");
+
+        // fetching client service from backend
+
+        const response = await fetch("http://localhost:5173/create-payment-intent", {
+            method: "POST",
+            headers: { "content-Type": "application/json" },
+            body: JSON.stringify({ amount: 5000 }),
+        });
+        const { clientSecret } = await response.json();
+        this.clientSecret = clientSecret;
+    },
+
     methods: {
         loadCartFromStorage() {
             const savedCart = localStorage.getItem('cart_Items_key');
@@ -64,8 +88,26 @@ export default {
         goBack() {
             this.$router.go(-1)
         },
-        payEvent() {
 
+        async payEvent() {
+            this.isProcessing = true;
+
+            const { error, paymentIntent } = await this.stripe.confirmCardpayment(this.clientSecret, {
+                payment_method: {
+                    card: this.cardElement,
+                },
+            });
+
+            this.isProcessing = false;
+
+            if (error) {
+                this.error = error.message;
+                this.success = null;
+            } else if (paymentIntent.status === "succeeded") {
+                this.success = "payment successful!";
+                this.error = null;
+
+            }
         }
     },
     created() {
@@ -78,6 +120,7 @@ export default {
 
         this.getTotalPrice();
     }
+
 }
 </script>
 
@@ -102,12 +145,22 @@ export default {
         </div>
 
         <div id="payment">
-            <div class="checkout-cta px-5">
+            <h1>Complete your payment</h1>
+            <form class="checkout-cta px-5" @submit.prevent="payEvent">
+
                 <p>Total ${{ totalPrice.toFixed(2) }}</p>
-                <BtnSolid @click="payEvent()" btnText="Pay now" v-show="totalPrice > 0"></BtnSolid>
-            </div>
+                <br>
+                <div id="card-element"></div>
+                <br>
+                <BtnSolid @click="payEvent()" btnText="Pay now" v-show="totalPrice > 0" type="submit"
+                    :disabled="isProcessing"></BtnSolid>
+
+
+            </form>
             <BtnClear btnText="Go back to shopping" @click="goBack()"></BtnClear>
 
+            <div v-if="error" class="error-message">{{ error }}</div>
+            <div v-if="success" class="success-message">{{ success }}</div>
         </div>
     </div>
 </template>
