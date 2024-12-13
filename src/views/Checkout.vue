@@ -1,7 +1,7 @@
 <script>
 import BtnClear from '@/components/BtnClear.vue';
 import BtnSolid from '@/components/BtnSolid.vue';
-import { loadStripe } from '@stripe/stripe-js';
+import axios from 'axios';
 
 export default {
     name: "Checkout",
@@ -38,7 +38,7 @@ export default {
             const index = this.cartItems.findIndex(cartItem => cartItem.id === itemId)
             if (index !== -1) {
                 this.cartItems.splice(index, 1);
-                // this doesnt save to storage because we want the original cart item intact in the cart
+                // this doesnt save to storage because we want the original cart item intact in the cart after deleting items
                 // this.saveCartToStorage();
                 this.getTotalPrice();
             }
@@ -68,8 +68,20 @@ export default {
             this.$router.go(-1)
         },
 
-        payEvent() {
-
+        async payEvent() {
+            try {
+                const response = await axios.post("http://localhost:3000/create-checkout-session", {
+                    items: this.cartItems.map((item) => ({
+                        id: item.id,
+                        quantity: item.count
+                    }))
+                })
+                if (response.data.url) {
+                    window.location = response.data.url
+                }
+            } catch (error) {
+                console.error("error creating session:", error)
+            }
         }
     },
     created() {
