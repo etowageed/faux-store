@@ -8,6 +8,8 @@ import Contact from "../views/Contact.vue";
 import Electronics from "../views/Electronics.vue";
 import details from "@/views/details.vue";
 import Checkout from "@/views/Checkout.vue";
+import Cancelled from "@/views/cancelled.vue";
+import Success from "@/views/success.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -65,6 +67,18 @@ const router = createRouter({
       path: "/checkout",
       name: "Checkout",
       component: Checkout,
+    },
+
+    {
+      path: "/success",
+      name: "Success",
+      component: Success,
+    },
+
+    {
+      path: "/cancelled",
+      name: "Cancelled",
+      component: Cancelled,
     },
   ],
 });

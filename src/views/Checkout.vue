@@ -73,14 +73,19 @@ export default {
                 const response = await axios.post("http://localhost:3000/create-checkout-session", {
                     items: this.cartItems.map((item) => ({
                         id: item.id,
-                        quantity: item.count
+                        quantity: item.count,
+                        price: item.price,
+                        title: item.title,
+                        image: item.image,
                     }))
                 })
                 if (response.data.url) {
                     window.location = response.data.url
                 }
             } catch (error) {
-                console.error("error creating session:", error)
+                console.error("error creating session:", error.response ? error.response.data : error)
+
+                alert("unable to process payment. please try again");
             }
         }
     },
@@ -93,13 +98,14 @@ export default {
         }
 
         this.getTotalPrice();
-    }
+    },
+
 
 }
 </script>
 
 <template>
-    <div>
+    <div class="px-5">
         <h1>Order Summary</h1>
         <div id="summary">
             <li v-for="cartItem in cartItems" :key="cartItem.id">
@@ -123,13 +129,17 @@ export default {
 
             <p>Total ${{ totalPrice.toFixed(2) }}</p>
 
-            <BtnSolid @click="payEvent()" btnText="Pay now" v-show="totalPrice > 0" type="submit"></BtnSolid>
+            <BtnSolid @click="payEvent()" btnText="Pay now" v-show="totalPrice > 0" type="submit" target="_blank">
+            </BtnSolid>
 
 
             <BtnClear btnText="Go back to shopping" @click="goBack()"></BtnClear>
-
+            <p>{{ transactionId }}</p>
 
         </div>
+
+
+
     </div>
 </template>
 
