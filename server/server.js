@@ -8,7 +8,6 @@ app.use(
   cors({
     origin: "http://localhost:5173",
     // cors helps us to use different urls for the client and server
-    // this particular url is that of vscode's liveserver that serves the client side code
     methods: ["GET", "POST"],
     credentials: true,
   })
