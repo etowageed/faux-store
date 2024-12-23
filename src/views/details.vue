@@ -83,12 +83,6 @@ export default {
         toggleLightBox() {
             this.isActive = !this.isActive
         },
-
-        toggleLightBoxDiv() {
-            this.isActive = !this.isActive;
-
-
-        },
         nextImage() {
             if (this.currentimageIndex < this.lightBoxImgs.length - 1) {
                 this.currentimageIndex++;
@@ -97,6 +91,7 @@ export default {
         prevImage() {
             if (this.currentimageIndex > 0) {
                 this.currentimageIndex--;
+
             }
         }
 
@@ -114,6 +109,7 @@ export default {
         this.loadCartFromStorage(),
             this.emitCartItems()
     }
+
 
 }
 </script>
@@ -147,16 +143,46 @@ export default {
     </div>
     <!-- lightbox -->
 
-    <div :class="{ lightbox: !isActive }" class="fixed flex z-50 top-0 w-full h-full bg-neutral-600 opacity-95"
-        @click="toggleLightBoxDiv()">
+    <div v-if="lightBoxImgs.length" :class="{ lightbox: !isActive }" class="fixed flex z-40 top-0 w-full h-full"
+        @click="toggleLightBox()">
+        <!-- overlay -->
+        <div class="absolute top-0 left-0 w-full h-full bg-black opacity-95">
 
-        <!-- click.stop prevents the event from the image propagation to the parent lightbox div -->
-        <img :src="lightBoxImgs[currentimageIndex]" class="w-80 h-80 mx-auto my-auto" @click.stop>
-
-        <div @click.stop>
-            <BtnClear btnText="prev" @click="prevImage()" :aria-disabled="currentimageIndex === 0" />
-            <BtnClear btnText="next" @click="nextImage()" :disabled="currentimageIndex === lightBoxImgs.length - 1" />
         </div>
+
+
+        <!-- lightbox -->
+        <!-- click.stop prevents the event from the image propagation to the parent lightbox div -->
+
+        <div class="relative mx-auto my-auto w-3/5 md:w-2/6 lg:w-2/12 space-y-14">
+            <div class="p-6 bg-white ">
+                <transition name=" slide" mode="out-in">
+                    <img :key="currentimageIndex" :src="lightBoxImgs[currentimageIndex]" @click.stop>
+                </transition>
+                <BtnClear btnText=" prev" @click.stop="prevImage()" :disabled="currentimageIndex === 0"
+                    class="absolute left-0 top-1/2 transform translate-y-1/2" />
+                <BtnClear btnText="next" @click.stop="nextImage()"
+                    :disabled="currentimageIndex === lightBoxImgs.length - 1"
+                    class="absolute right-0 top-1/2 transform translate-y-1/2" />
+
+            </div>
+            <div class=" flex justify-center space-x-10">
+                <img :src="product.image" alt="" srcset="" class=" h-24 w-24 cursor-pointer" @click="toggleLightBox()"
+                    :class="{ isSelected: currentimageIndex === 0 }">
+                <img :src="product.image" alt="" srcset="" class=" h-24 w-24 cursor-pointer" @click="toggleLightBox()"
+                    :class="{ isSelected: currentimageIndex === 1 }">
+                <img :src="product.image" alt="" srcset="" class=" h-24 w-24 cursor-pointer" @click="toggleLightBox()"
+                    :class="{ isSelected: currentimageIndex === 2 }">
+                <img :src="product.image" alt="" srcset="" class=" h-24 w-24 cursor-pointer" @click="toggleLightBox()"
+                    :class="{ isSelected: currentimageIndex === 3 }">
+
+            </div>
+
+
+        </div>
+
+
+
     </div>
 
 
@@ -165,9 +191,30 @@ export default {
 
 
 
-<style>
+<style scoped>
 .lightbox {
     display: none;
 
+}
+
+.slide-enter-active,
+.slide-leave-active {
+    transition: transform 0.5s;
+    /* position: absolute; */
+    /* width: 100%; */
+}
+
+.slide-enter {
+    transform: translateX(100%);
+}
+
+.slide-leave-to {
+    transform: translateX(-50%);
+}
+
+.isSelected {
+    border: 3px solid hsl(26, 100%, 55%);
+    opacity: 0.2;
+    border-radius: 10%;
 }
 </style>
