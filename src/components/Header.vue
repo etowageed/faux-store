@@ -1,10 +1,11 @@
 <script>
 import Cart from '@/components/Cart.vue';
 import Account from '@/components/Account.vue'
+import CartBadge from '@/components/CartBadge.vue';
 export default {
     name: 'Header',
     components: {
-        Cart, Account,
+        Cart, Account, CartBadge,
     },
 
     data() {
@@ -48,12 +49,21 @@ export default {
 
 
 
-            <span class="flex justify-between w-28">
-                <img src="../assets/imgs/icon-cart.svg" alt="cart icon" class="w-5 h-5 my-auto cursor-pointer"
-                    @click="toggleCart">
-                <img src="../assets/imgs/image-avatar.png" alt="" class="w-10 h-10 inline cursor-pointer"
-                    @click="toggleAvatar()">
-            </span>
+            <div class="flex justify-between md:w-28">
+
+
+                <div class="relative flex items-center">
+                    <CartBadge class="absolute top-0 left-3" />
+
+                    <img src="../assets/imgs/icon-cart.svg" alt="cart icon" class="w-5 h-5 cursor-pointer"
+                        @click="toggleCart">
+                </div>
+                <div>
+                    <img src="../assets/imgs/image-avatar.png" alt="" class="w-10 h-10 inline cursor-pointer"
+                        @click="toggleAvatar()">
+
+                </div>
+            </div>
             <Cart class="fixed top-[10%] right-[23.5%] md:right-[10%] md:top-[8%]"
                 :class="{ toggleOff: !isShowing, }" />
 

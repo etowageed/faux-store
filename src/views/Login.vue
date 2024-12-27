@@ -44,7 +44,14 @@ export default {
                 this.errorMsg = 'Login failed. Please check your credentials';
                 console.error('Error:', error);
             }
+            // alerts for status messages
+            if (this.successMsg) {
+                alert(this.successMsg)
+            } else { alert(this.errorMsg) };
+
+            this.emitter.emit('formEvent', this.formData)
         }
+
     }
 
 }
@@ -63,9 +70,6 @@ export default {
                 <BtnSolid type="submit" btnText="Login" />
                 <BtnClear btnText="Create account" />
             </form>
-
-            <p v-if="errorMsg" class="error">{{ errorMsg }}</p>
-            <p v-if="successMsg" class="success">{{ successMsg }}</p>
 
         </div>
     </div>

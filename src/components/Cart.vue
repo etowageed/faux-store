@@ -66,8 +66,19 @@ export default {
 
     updated() {
         this.getTotalPrice();
+        this.emitter.emit('cartCountEvent', this.cartCount)
+
+
+
+
+    },
+    computed: {
+        cartCount() {
+            return this.cartItems.reduce((total, item) => total + item.count, 0);
+        }
 
     }
+
 }
 </script>
 
