@@ -55,8 +55,12 @@ export default {
                     count: this.count,
                 });
 
+
+
             }
             this.saveCartToStorage();
+            // this adds the toast to this component
+            this.$root.showToast('Item added to cart!', 'success')
 
             console.log(this.cartItems)
         },

@@ -46,6 +46,7 @@ export default {
 
             }
             this.saveCartToStorage();
+            this.$root.showToast('Item added to cart!', 'success')
 
             console.log(this.cartItems)
         },

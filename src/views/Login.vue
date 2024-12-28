@@ -46,8 +46,11 @@ export default {
             }
             // alerts for status messages
             if (this.successMsg) {
-                alert(this.successMsg)
-            } else { alert(this.errorMsg) };
+                this.$root.showToast(this.successMsg, 'success')
+
+            } else {
+                this.$root.showToast(this.errorMsg, 'error')
+            };
 
             this.emitter.emit('formEvent', this.formData)
         }
@@ -77,11 +80,11 @@ export default {
 
 
 <style>
-.error {
+/* .error {
     color: red;
-}
+} */
 
-.success {
+/* .success {
     color: green;
-}
+} */
 </style>
