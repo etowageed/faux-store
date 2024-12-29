@@ -78,28 +78,36 @@ export default {
 </script>
 
 <template>
-    <div class="border border-red-600 lg:w-1/3 md:flex md:flex-wrap mx-auto">
-        <div v-for="(product, index ) in products" :key="index"
-            class="border border-primaryCol grow md:w-1/3 m-6 p-3 flex justify-between flex-col">
+    <!-- products display across various views -->
+    <div id="container-products"
+        class="border border-red-600 p-5 gap-6 flex flex-wrap mx-auto lg:w-3/4 xl:w-4/5 2xl:w-1/2">
 
-            <div class="border border-red-600">
+
+        <!-- single product -->
+        <div v-for=" (product, index ) in products" :key="index"
+            class="border rounded-md grow w-full sm:w-1/2 md:w-1/3 lg:w-1/3 xl:w-1/4 p-3 flex justify-between flex-col">
+
+
+            <!-- item image -->
+            <div class="p-5">
                 <img :src="product.image" :alt="product.title" class="md:w-40 md:h-52 mx-auto cursor-pointer"
                     @click="viewDetails(product.id)">
 
             </div>
 
-            <div>
+            <!-- item details -->
+            <div class="space-y-3">
                 <p class="text-primaryCol font-medium">{{ product.category }}</p>
-                <p class="text-darkBlue font-bold text-lg">{{ product.title }}</p>
-                <p class="text-darkBlue font-bold ">{{ product.price }}</p>
+                <p class="text-darkBlue font-bold text-lg text-wrap">{{ product.title }}</p>
+                <p class="text-darkBlue font-bold ">${{ product.price }}</p>
             </div>
 
-            <div class="flex space-x-4">
+            <!-- cta buttons -->
 
+            <div class="flex space-x-4 my-3">
                 <BtnSolid @click="addToCart(product)" btnText="Add to cart" icon="/icon-cart.svg"></BtnSolid>
 
                 <BtnClear btnText="Details" @click="viewDetails(product.id)"></BtnClear>
-
             </div>
 
         </div>

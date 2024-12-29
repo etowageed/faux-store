@@ -78,20 +78,23 @@ export default {
 
         <!-- logo -->
         <div id="logo" class="border items-baseline p-3">
-            <img src="../assets/imgs/logo.svg" alt="Sneakers Logo">
+            <RouterLink to="/">
+                <img src="../assets/imgs/logo.svg" alt="Sneakers Logo">
+
+            </RouterLink>
         </div>
 
 
         <!-- nav links -->
-        <nav class="hidden md:block border p-3 lg:w-3/4 text-center">
+        <nav class="hidden md:block border p-3 text-center">
             <span class="space-x-5 text-base">
-                <RouterLink to="/">Collections</RouterLink>
-                <RouterLink to="/men">Men</RouterLink>
-                <RouterLink to="/women">Women</RouterLink>
-                <RouterLink to="/jewelries">Jewelries</RouterLink>
-                <RouterLink to="/electronics">Electronics</RouterLink>
-                <RouterLink to="/about">About</RouterLink>
-                <RouterLink to="/contact">Contact</RouterLink>
+                <RouterLink to="/" @click="toggleSideNav()">Collections</RouterLink>
+                <RouterLink to="/men" @click="toggleSideNav()">Men</RouterLink>
+                <RouterLink to="/women" @click="toggleSideNav()">Women</RouterLink>
+                <RouterLink to="/jewelries" @click="toggleSideNav()">Jewelries</RouterLink>
+                <RouterLink to="/electronics" @click="toggleSideNav()">Electronics</RouterLink>
+                <RouterLink to="/about" @click="toggleSideNav()">About</RouterLink>
+                <RouterLink to="/contact" @click="toggleSideNav()">Contact</RouterLink>
             </span>
         </nav>
 
@@ -101,18 +104,13 @@ export default {
 
 
             <div id="container-cart_and_Badge" class="relative flex items-center">
-                <div class="cartAndBadge">
+                <div class="cartAndBadge cursor-pointer" @click="toggleCart()">
                     <CartBadge class="absolute top-0 left-3" />
 
-                    <img src="../assets/imgs/icon-cart.svg" alt="cart icon" class="w-5 h-5 cursor-pointer"
-                        @click="toggleCart">
+                    <img src="../assets/imgs/icon-cart.svg" alt="cart icon" class="w-5 h-5 cursor-pointer">
                 </div>
                 <div>
                     <Cart class="absolute" :class="{ toggleOff: !isShowing, }" />
-
-                    <!-- <Cart class="fixed top-[10%] right-[23.5%] md:right-[10%] md:top-[8%]"
-    :class="{ toggleOff: !isShowing, }" /> -->
-
                 </div>
 
             </div>
