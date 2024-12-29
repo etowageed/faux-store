@@ -12,6 +12,7 @@ export default {
         return {
             isShowing: false,
             isShowingAvatar: false,
+            isShowingSideNav: false,
         }
     },
     methods: {
@@ -23,6 +24,11 @@ export default {
         toggleAvatar() {
             this.isShowingAvatar = !this.isShowingAvatar
 
+        },
+
+        toggleSideNav() {
+            this.isShowingSideNav = !this.isShowingSideNav
+
         }
     }
 }
@@ -31,12 +37,53 @@ export default {
 
 
 <template>
-    <div class="border-b py-10">
-        <nav class="md:w-3/4 flex justify-between mx-auto items-baseline">
-            <span>
-                <img src="../assets/imgs/logo.svg" alt="Sneakers Logo">
-            </span>
+    <!-- side nav -->
 
+    <div id="container_sideNav" class="md:hidden" :class="{ toggleOff: !isShowingSideNav }">
+        <div id="mobile_nav" class="bg-white w-2/3 h-full p-5 fixed z-50">
+            <div id="close_sideNav">
+                <img class="cursor-pointer" src="../assets/imgs/icon-close.svg" alt="" srcset=""
+                    @click="toggleSideNav()">
+            </div>
+            <nav class="mt-12">
+                <span class="font-bold flex flex-col space-y-5">
+                    <RouterLink to="/">Collections</RouterLink>
+                    <RouterLink to="/men">Men</RouterLink>
+                    <RouterLink to="/women">Women</RouterLink>
+                    <RouterLink to="/jewelries">Jewelries</RouterLink>
+                    <RouterLink to="/electronics">Electronics</RouterLink>
+                    <RouterLink to="/about">About</RouterLink>
+                    <RouterLink to="/contact">Contact</RouterLink>
+                </span>
+            </nav>
+
+        </div>
+
+        <!-- overlay -->
+        <div class="fixed top-0 left-0 w-full h-screen bg-black opacity-95 z-40">
+
+        </div>
+    </div>
+
+
+
+    <!-- header -->
+    <div id="header_items" class="border-b p-3 md:py-5 md:px-10 flex justify-between">
+
+        <!-- hamburger menu -->
+
+        <div id="hamburger_icon" class="items-center p-3 border cursor-pointer md:hidden">
+            <img src="../assets/imgs/icon-menu.svg" alt="" srcset="" @click="toggleSideNav()">
+        </div>
+
+        <!-- logo -->
+        <div id="logo" class="border items-baseline p-3">
+            <img src="../assets/imgs/logo.svg" alt="Sneakers Logo">
+        </div>
+
+
+        <!-- nav links -->
+        <nav class="hidden md:block border p-3 lg:w-3/4 text-center">
             <span class="space-x-5 text-base">
                 <RouterLink to="/">Collections</RouterLink>
                 <RouterLink to="/men">Men</RouterLink>
@@ -46,36 +93,42 @@ export default {
                 <RouterLink to="/about">About</RouterLink>
                 <RouterLink to="/contact">Contact</RouterLink>
             </span>
+        </nav>
+
+        <!-- cart and avatar section -->
+        <div id="container-cart_and_avatar"
+            class=" border flex justify-between md:w-28 items-center space-x-7 px-3 mx-5">
 
 
-
-            <div class="flex justify-between md:w-28">
-
-
-                <div class="relative flex items-center">
+            <div id="container-cart_and_Badge" class="relative flex items-center">
+                <div class="cartAndBadge">
                     <CartBadge class="absolute top-0 left-3" />
 
                     <img src="../assets/imgs/icon-cart.svg" alt="cart icon" class="w-5 h-5 cursor-pointer"
                         @click="toggleCart">
                 </div>
                 <div>
-                    <img src="../assets/imgs/image-avatar.png" alt="" class="w-10 h-10 inline cursor-pointer"
-                        @click="toggleAvatar()">
+                    <Cart class="absolute" :class="{ toggleOff: !isShowing, }" />
+
+                    <!-- <Cart class="fixed top-[10%] right-[23.5%] md:right-[10%] md:top-[8%]"
+    :class="{ toggleOff: !isShowing, }" /> -->
 
                 </div>
+
             </div>
-            <Cart class="fixed top-[10%] right-[23.5%] md:right-[10%] md:top-[8%]"
-                :class="{ toggleOff: !isShowing, }" />
+            <div>
+                <img src="../assets/imgs/image-avatar.png" alt="" class="w-7 h-7 md:w-10 md:h-10 inline cursor-pointer"
+                    @click="toggleAvatar()">
+
+            </div>
+
 
             <Account class="fixed top-[30%] right-[29%] md:right-[7%] md:top-[10%]"
                 :class="{ toggleOff: !isShowingAvatar, }" />
 
-
-
-
-
-        </nav>
+        </div>
     </div>
+
 </template>
 
 
