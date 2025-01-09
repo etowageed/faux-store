@@ -79,8 +79,7 @@ export default {
 
 <template>
     <!-- products display across various views -->
-    <div id="container-products"
-        class="border border-red-600 p-5 gap-6 flex flex-wrap mx-auto lg:w-3/4 xl:w-4/5 2xl:w-1/2">
+    <div id="container-products" class="p-5 gap-6 flex flex-wrap mx-auto lg:w-3/4 xl:w-4/5 2xl:w-1/2">
 
 
         <!-- single product -->

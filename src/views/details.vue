@@ -121,7 +121,7 @@ export default {
 
 <template>
     <Header />
-    <div class="lg:w-1/3 mx-auto md:flex border border-red-500">
+    <div class="lg:w-2/5 mx-auto md:flex border border-red-500">
         <div class="md:w-1/3 lg:w-1/2">
             <img :src="product.image" alt="" srcset="" class="w-full cursor-pointer" @click="toggleLightBox()">
 
@@ -134,11 +134,15 @@ export default {
             </div>
         </div>
 
-        <div class="lg:w-1/2 flex flex-col justify-between">
-            <p>{{ product.category }}</p>
-            <p>{{ product.title }}</p>
-            <p>{{ product.description }}</p>
-            <p>${{ product.price }}</p>
+        <div class="lg:w-1/2 flex flex-col space-y-2">
+            <p class="font-bold text-s text-textCol">{{ product.category }}</p>
+            <p class="text-darkBlue font-bold text-2xl text-wrap">{{ product.title }}</p>
+            <p class="text-textCol text-base ">{{ product.description }}</p>
+            <div class="space-x-4">
+                <span class="text-darkBlue font-bold text-xl">${{ product.price }}</span> <span
+                    class="text-xs font-bold rounded p-1 text-white bg-darkBlue">50%</span>
+            </div>
+            <p v-if="product.price" class="line-through text-textCol text-xs font-bold">$250.00</p>
             <BtnCounter @countEvent="count = $event" class="mr-3" />
             <BtnSolid @click="addToCart(product)" btnText="Add to cart" icon="/icon-cart.svg"></BtnSolid>
 

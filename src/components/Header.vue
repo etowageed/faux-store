@@ -87,7 +87,7 @@ export default {
 
         <!-- nav links -->
         <nav class="hidden md:block border p-3 text-center">
-            <span class="space-x-5 text-base">
+            <span class="space-x-5 text-base font-semibold">
                 <RouterLink to="/" @click="toggleSideNav()">Collections</RouterLink>
                 <RouterLink to="/men" @click="toggleSideNav()">Men</RouterLink>
                 <RouterLink to="/women" @click="toggleSideNav()">Women</RouterLink>

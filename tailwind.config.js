@@ -11,6 +11,7 @@ export default {
         grayishBlue: "hsl(220, 14%, 75%)",
         lightGrayishBlue: "hsl(223, 64%, 98%)",
         lightBoxBg: "hsl(0, 0%, 0%)",
+        textCol: "#3d3d3d",
       },
     },
   },
