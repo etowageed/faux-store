@@ -68,7 +68,7 @@ export default {
 
 
     <!-- header -->
-    <div id="header_items" class="border-b p-3 md:py-5 md:px-10 flex justify-between">
+    <div id="header_items" class="border-b p-3 md:py-5 md:px-10 flex justify-between bg-white w-full">
 
         <!-- hamburger menu -->
 
@@ -77,7 +77,7 @@ export default {
         </div>
 
         <!-- logo -->
-        <div id="logo" class="border items-baseline p-3">
+        <div id="logo" class=" items-baseline p-3">
             <RouterLink to="/">
                 <img src="../assets/imgs/logo.svg" alt="Sneakers Logo">
 
@@ -86,7 +86,7 @@ export default {
 
 
         <!-- nav links -->
-        <nav class="hidden md:block border p-3 text-center">
+        <nav class="hidden md:block p-3 text-center">
             <span class="space-x-5 text-base font-semibold">
                 <RouterLink to="/" @click="toggleSideNav()">Collections</RouterLink>
                 <RouterLink to="/men" @click="toggleSideNav()">Men</RouterLink>
@@ -99,8 +99,7 @@ export default {
         </nav>
 
         <!-- cart and avatar section -->
-        <div id="container-cart_and_avatar"
-            class=" border flex justify-between md:w-28 items-center space-x-7 px-3 mx-5">
+        <div id="container-cart_and_avatar" class="flex justify-between md:w-28 items-center space-x-7 px-3 mx-5">
 
 
             <div id="container-cart_and_Badge" class="relative flex items-center">

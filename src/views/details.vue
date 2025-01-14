@@ -121,11 +121,16 @@ export default {
 
 <template>
     <Header />
-    <div class="lg:w-2/5 mx-auto md:flex border border-red-500">
-        <div class="md:w-1/3 lg:w-1/2">
-            <img :src="product.image" alt="" srcset="" class="w-full cursor-pointer" @click="toggleLightBox()">
+    <!-- content -->
 
-            <div class=" flex justify-between">
+    <div id="detailsContent"
+        class="mx-auto md:w-4/5 xl:w-2/5 flex flex-col md:flex-row p-3 justify-between space-y-10 md:items-center">
+        <!-- product image -->
+        <div id="imageDiv" class="xl:w-2/5">
+            <img :src="product.image" alt="" srcset="" class="w-3/5 md:w-full mx-auto cursor-pointer"
+                @click="toggleLightBox()">
+
+            <div class=" flex w-4/5 mx-auto justify-between mt-5">
                 <img :src="product.image" alt="" srcset="" class=" h-14 w-14 cursor-pointer" @click="toggleLightBox()">
                 <img :src="product.image" alt="" srcset="" class=" h-14 w-14 cursor-pointer" @click="toggleLightBox()">
                 <img :src="product.image" alt="" srcset="" class=" h-14 w-14 cursor-pointer" @click="toggleLightBox()">
@@ -134,18 +139,29 @@ export default {
             </div>
         </div>
 
-        <div class="lg:w-1/2 flex flex-col space-y-2">
-            <p class="font-bold text-s text-textCol">{{ product.category }}</p>
-            <p class="text-darkBlue font-bold text-2xl text-wrap">{{ product.title }}</p>
-            <p class="text-textCol text-base ">{{ product.description }}</p>
-            <div class="space-x-4">
-                <span class="text-darkBlue font-bold text-xl">${{ product.price }}</span> <span
-                    class="text-xs font-bold rounded p-1 text-white bg-darkBlue">50%</span>
-            </div>
-            <p v-if="product.price" class="line-through text-textCol text-xs font-bold">$250.00</p>
-            <BtnCounter @countEvent="count = $event" class="mr-3" />
-            <BtnSolid @click="addToCart(product)" btnText="Add to cart" icon="/icon-cart.svg"></BtnSolid>
+        <!-- text/button content -->
+        <div class="lg:w-1/2 md:py-60 flex flex-col space-y-5 md:space-y-10 p-5">
+            <div>
+                <p class="font-bold text-s text-textCol opacity-65">{{ product.category }}</p>
+                <p class="text-darkBlue font-bold text-2xl text-wrap mt-2 md:mt-5 mb-5 md:mb-10">{{ product.title }}</p>
+                <p class="text-textCol text-base mb-5">{{ product.description }}</p>
 
+                <div class="flex justify-between items-baseline">
+                    <span class="space-x-4">
+                        <span class="text-darkBlue font-bold text-xl">${{ product.price }}</span> <span
+                            class="text-xs font-bold rounded p-1 text-white bg-darkBlue">50%</span>
+
+                    </span>
+                    <span v-if="product.price" class="line-through text-textCol text-sm font-bold inline">$250.00</span>
+
+                </div>
+            </div>
+
+            <div class="space-y-4 md:space-y-0 md:flex">
+                <BtnCounter @countEvent="count = $event" class="w-full md:w-2/3 md:mr-3 py-3 px-3" />
+                <BtnSolid @click="addToCart(product)" btnText="Add to cart" icon="/icon-cart.svg"></BtnSolid>
+
+            </div>
 
         </div>
     </div>
@@ -159,30 +175,36 @@ export default {
         </div>
 
 
-        <!-- lightbox -->
+        <!-- overlay content -->
         <!-- click.stop prevents the event from the image propagation to the parent lightbox div -->
 
-        <div class="relative mx-auto my-auto w-3/5 md:w-2/6 lg:w-2/12 space-y-14">
-            <div class="p-6 bg-white ">
+        <div class="relative md:w-2/4 xl:w-1/3 2xl:w-1/5 mx-auto my-auto space-y-14">
+            <div class="p-6 bg-white">
                 <transition name=" slide" mode="out-in">
                     <img :key="currentimageIndex" :src="lightBoxImgs[currentimageIndex]" @click.stop>
                 </transition>
-                <BtnClear btnText=" prev" @click.stop="prevImage()" :disabled="currentimageIndex === 0"
-                    class="absolute left-0 top-1/2 transform translate-y-1/2" />
-                <BtnClear btnText="next" @click.stop="nextImage()"
-                    :disabled="currentimageIndex === lightBoxImgs.length - 1"
-                    class="absolute right-0 top-1/2 transform translate-y-1/2" />
+
+                <button @click.stop="prevImage()" :disabled="currentimageIndex === lightBoxImgs.length - 0"
+                    class="absolute left-2 bg-white top-1/3 transform translate-y-1/2 border border-primaryCol rounded-full p-4"><img
+                        src="../assets/imgs/icon-previous.svg" alt="" srcset=""></button>
+
+                <button @click.stop="nextImage()" :disabled="currentimageIndex === lightBoxImgs.length - 1"
+                    class="absolute right-2 bg-white top-1/3 transform translate-y-1/2 border border-primaryCol rounded-full p-4"><img
+                        src="../assets/imgs/icon-next.svg" alt="" srcset=""></button>
 
             </div>
-            <div class=" flex justify-center space-x-10">
-                <img :src="product.image" alt="" srcset="" class=" h-24 w-24 cursor-pointer" @click="toggleLightBox()"
-                    :class="{ isSelected: currentimageIndex === 0 }">
-                <img :src="product.image" alt="" srcset="" class=" h-24 w-24 cursor-pointer" @click="toggleLightBox()"
-                    :class="{ isSelected: currentimageIndex === 1 }">
-                <img :src="product.image" alt="" srcset="" class=" h-24 w-24 cursor-pointer" @click="toggleLightBox()"
-                    :class="{ isSelected: currentimageIndex === 2 }">
-                <img :src="product.image" alt="" srcset="" class=" h-24 w-24 cursor-pointer" @click="toggleLightBox()"
-                    :class="{ isSelected: currentimageIndex === 3 }">
+
+
+            <div class=" p-2 flex w-5/6 md:w-full mx-auto justify-between">
+
+                <img :src="product.image" alt="" srcset="" class=" h-14 w-14 md:h-20 md:w-20 cursor-pointer"
+                    @click="toggleLightBox()" :class="{ isSelected: currentimageIndex === 0 }">
+                <img :src="product.image" alt="" srcset="" class=" h-14 w-14 md:h-20 md:w-20 cursor-pointer"
+                    @click="toggleLightBox()" :class="{ isSelected: currentimageIndex === 1 }">
+                <img :src="product.image" alt="" srcset="" class=" h-14 w-14 md:h-20 md:w-20 cursor-pointer"
+                    @click="toggleLightBox()" :class="{ isSelected: currentimageIndex === 2 }">
+                <img :src="product.image" alt="" srcset="" class=" h-14 w-14 md:h-20 md:w-20 cursor-pointer"
+                    @click="toggleLightBox()" :class="{ isSelected: currentimageIndex === 3 }">
 
             </div>
 

@@ -30,9 +30,9 @@ export default {
 
 <template>
     <div
-        class="bg-lightGrayishBlue text-center py-3 px-[5%] md:w-1/2 inline-flex whitespace-nowrap font-semibold text-darkBlue rounded justify-between">
+        class="bg-lightGrayishBlue text-center whitespace-nowrap font-semibold text-darkBlue rounded flex justify-between">
         <button @click="counterDown"><img src="../assets/imgs/icon-minus.svg" alt=""></button>
-        <span class="inline">{{ count }}</span>
+        <span>{{ count }}</span>
         <button @click="counterUp"><img src="../assets/imgs/icon-plus.svg" alt=""></button>
 
 
